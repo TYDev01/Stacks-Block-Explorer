@@ -79,3 +79,20 @@ interface TransactionEvent {
     mint: number;
     burn: number;
 }
+
+
+export async function fetchAddressTransaction({ address, offset = 0,}: FetchAddressTransactionsArgs): Promise<FetchAddressTransactionsResponse> {
+    const url = `https://api.hiro.so/extended/v2/addresses/${address}/transactions?limit=20&offset=${offset}`;
+    const response = await fetch(url);
+
+    // if (response.status !== 200) {
+    //     throw new Error(`Error fetching transactions: ${response.statusText}`);
+    // }
+
+    if (!response.ok) {
+        throw new Error(`Error fetching transactions: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data as FetchAddressTransactionsResponse;
+}
