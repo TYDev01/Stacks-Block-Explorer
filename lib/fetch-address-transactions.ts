@@ -81,9 +81,10 @@ interface TransactionEvent {
 }
 
 
-export async function fetchAddressTransaction({ address, offset = 0,}: FetchAddressTransactionsArgs): Promise<FetchAddressTransactionsResponse> {
+export async function fetchAddressTransactions({ address, offset = 0,}: FetchAddressTransactionsArgs): Promise<FetchAddressTransactionsResponse> {
     const url = `https://api.hiro.so/extended/v2/addresses/${address}/transactions?limit=20&offset=${offset}`;
     const response = await fetch(url);
+
 
     // if (response.status !== 200) {
     //     throw new Error(`Error fetching transactions: ${response.statusText}`);

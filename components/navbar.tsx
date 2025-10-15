@@ -16,6 +16,30 @@ export function Navbar() {
   // our useStacks hook
   const {connected, addresses, connectWallet, disconnectWallet } = useStacks();
 
+    const userAddress =
+        typeof addresses === "string"
+            ? addresses
+            : Array.isArray(addresses)
+            ? addresses[0]
+            : addresses && typeof addresses === "object"
+            ? (
+                (addresses as {
+                mainnet?: { address?: string };
+                testnet?: { address?: string };
+                }).mainnet?.address ??
+                (addresses as {
+                mainnet?: { address?: string };
+                testnet?: { address?: string };
+                }).testnet?.address ??
+                null
+            )
+            : null;
+
+
+    console.log("addresses value:", addresses);
+    console.log("userAddress normalized:", userAddress);
+
+
   // function that validates the user inputted address
   // If it is valid, we will redirect the user to the txn history page
   function handleSearch() {
@@ -37,7 +61,8 @@ export function Navbar() {
   }
 
   // The first address from the connected wallet
-  const userAddress = addresses ? addresses[0] : null;
+//   const userAddress = addresses ? addresses[0] : null;
+
 
   return (
     <nav className="flex w-full items-center justify-between gap-4 p-4 h-16 border-b border-gray-500">
